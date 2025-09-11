@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        Log.d("MainActivity", "onCreate: YOU CREATED")
     }
 
     override fun onStart() {
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        Log.d("MainActivity", "onPause: ")
+        Log.d("MainActivity", "onPause: YOU PAUSED")
     }
 
     override fun onStop() {
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MainActivity", "onDestroy: ")
+        Log.d("MainActivity", "onDestroy: YOU DESTROYED")
     }
 }
 

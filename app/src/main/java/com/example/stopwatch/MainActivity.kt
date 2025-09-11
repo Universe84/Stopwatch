@@ -1,6 +1,7 @@
 package com.example.stopwatch
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,6 +17,36 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("MainActivity", "onStart: YOU STARTED")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("MainActivity", "onResume: YOU RESUMED")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("MainActivity", "onPause: ")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("MainActivity", "onStop: YOU STOPPED")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("MainActivity", "onRestart: YOU RESTARTED")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("MainActivity", "onDestroy: ")
     }
 }
 

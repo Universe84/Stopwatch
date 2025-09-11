@@ -22,7 +22,7 @@
         android:id="@+id/button_main_stopStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop/Start"
+        android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_main_reset"
         app:layout_constraintHorizontal_bias="0.5"

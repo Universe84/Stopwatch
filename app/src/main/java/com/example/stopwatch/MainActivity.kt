@@ -19,4 +19,4 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-//lamoakl
+//lamoakl im on github gi t hub g it ub

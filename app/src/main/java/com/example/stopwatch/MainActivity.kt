@@ -12,13 +12,23 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
+    companion object{
+        val TAG = "MainActivity"
+
+        val TIME_ELAPSED = "time"
+
+        val STARTED = "is started"
+    }
+
     private lateinit var startButton : Button
     private lateinit var resetButton : Button
     private lateinit var timerClock : Chronometer
     private var timeElapsed = 0;
+    private var isStarted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -26,27 +36,49 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        Log.d("MainActivity", "onCreate: YOU CREATED")
         wireWidgets()
+        if(savedInstanceState != null){
+
+            timeElapsed = savedInstanceState.getInt(TIME_ELAPSED)
+            isStarted = savedInstanceState.getBoolean(STARTED)
+
+            if(isStarted){
+                timerClock.setBase(SystemClock.elapsedRealtime() - timeElapsed)
+                timerClock.start()
+                startButton.text = "Stop"
+            }
+            else{
+                timerClock.base = SystemClock.elapsedRealtime() - timeElapsed
+
+                startButton.text = "Start"
+            }
+        }
+        Log.d("MainActivity", "onCreate: YOU CREATED")
+
 
         startButton.setOnClickListener {
-            if(startButton.text.equals("Start")){
+            if(!isStarted){
                 startButton.text = "Stop"
-                timerClock.setBase(timeElapsed + SystemClock.elapsedRealtime())
+                timerClock.setBase(SystemClock.elapsedRealtime() - timeElapsed)
                 timerClock.start()
+                isStarted = true
             }
             else{
                 startButton.text = "Start"
 
                 timerClock.stop()
-                timeElapsed =  timerClock.getBase().toInt() - SystemClock.elapsedRealtime().toInt()
-
+                timeElapsed =  SystemClock.elapsedRealtime().toInt() - timerClock.getBase().toInt()
+                isStarted = false
             }
         }
 
         resetButton.setOnClickListener {
+
             timerClock.setBase(SystemClock.elapsedRealtime())
             timeElapsed = 0
+            if(!isStarted){
+                startButton.text = "Start"
+            }
         }
     }
 
@@ -86,6 +118,21 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d("MainActivity", "onDestroy: YOU DESTROYED")
     }
+
+    //to maintain the state between orentation changes we use saved instance states
+    override fun onSaveInstanceState(outState: Bundle) {
+
+        timerClock.stop()
+
+        outState.putBoolean(STARTED, isStarted)
+        if(isStarted){
+            timeElapsed = (SystemClock.elapsedRealtime() - timerClock.base).toInt()
+        }
+        outState.putInt(TIME_ELAPSED, timeElapsed)
+        super.onSaveInstanceState(outState)
+
+    }
+
 }
 
-//lamoakl im on github gi t hub g it ub
+
